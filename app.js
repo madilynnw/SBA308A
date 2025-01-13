@@ -31,6 +31,11 @@ const gallery = document.getElementById("gallery");
 const pagination = document.getElementById("pagination");
 const searchInput = document.getElementById("search");
 const addSongButton = document.getElementById("addSongButton");
+const editModal = document.getElementById("editModal");
+const closeModal = document.getElementById("closeModal");
+const editForm = document.getElementById("editForm");
+const editTitle = document.getElementById("editTitle");
+const editArtist = document.getElementById("editArtist");
 
 // Fetch the songs based on query and pagination
 function fetchSongs(query = "", page = 1) {
@@ -56,7 +61,7 @@ function displaySongs(songs) {
     songElement.innerHTML = `
         <div class="song-title">${song.title}</div>
         <div class="song-artist">${song.artist}</div>
-        <button onclick="editSong(${song.id})">Edit Song</button>
+        <button onclick="openEditModal(${song.id})">Edit Song</button>
       `;
     gallery.appendChild(songElement);
   });
@@ -65,58 +70,4 @@ function displaySongs(songs) {
 // Setup pagination controls
 function setupPagination() {
   pagination.innerHTML = ""; // Clear current pagination
-
-  for (let i = 1; i <= totalPages; i++) {
-    const pageButton = document.createElement("button");
-    pageButton.innerText = i;
-    pageButton.onclick = () => {
-      currentPage = i;
-      fetchSongs(searchQuery, currentPage);
-    };
-
-    if (i === currentPage) {
-      pageButton.disabled = true; // Disable current page button
-    }
-
-    pagination.appendChild(pageButton);
-  }
 }
-
-// Handle search input
-searchInput.addEventListener("input", (e) => {
-  searchQuery = e.target.value;
-  currentPage = 1; // Reset to first page when a new search is done
-  fetchSongs(searchQuery, currentPage);
-});
-
-// Add new song using POST request
-addSongButton.addEventListener("click", () => {
-  const newSong = {
-    id: topRnbSongs.length + 1, // New song ID
-    title: "New R&B Hit",
-    artist: "Unknown Artist",
-  };
-
-  topRnbSongs.push(newSong); // Add the song to the list
-  alert("New song added!");
-  fetchSongs(searchQuery, currentPage); // Reload the gallery after adding the song
-});
-
-// Edit a song using PUT request
-function editSong(songId) {
-  const updatedSong = {
-    title: "Updated Song Title",
-    artist: "Updated Artist",
-  };
-
-  // Find the song by ID and update it
-  const songIndex = topRnbSongs.findIndex((song) => song.id === songId);
-  if (songIndex !== -1) {
-    topRnbSongs[songIndex] = { ...topRnbSongs[songIndex], ...updatedSong };
-    alert("Song updated successfully!");
-    fetchSongs(searchQuery, currentPage); // Reload the gallery after updating the song
-  }
-}
-
-// Initial load
-fetchSongs("", currentPage);
