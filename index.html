@@ -1,14 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title></title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top 20 R&B Songs of 2024</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Linking the external CSS -->
   </head>
   <body>
-    <script src="" async defer></script>
+    <input type="text" id="search" placeholder="Search for songs..." />
+    <button id="addSongButton">Add New Song</button>
+    <div class="gallery" id="gallery"></div>
+    <div class="pagination" id="pagination"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
