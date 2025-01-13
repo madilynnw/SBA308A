@@ -5,13 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Top 20 R&B Songs of 2024</title>
     <link rel="stylesheet" href="styles.css" />
-    <!-- Linking the external CSS -->
   </head>
   <body>
     <input type="text" id="search" placeholder="Search for songs..." />
     <button id="addSongButton">Add New Song</button>
     <div class="gallery" id="gallery"></div>
     <div class="pagination" id="pagination"></div>
+
+    <!-- Modal for editing song -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>Edit Song</h2>
+        <form id="editForm">
+          <input type="text" id="editTitle" placeholder="Song Title" required />
+          <input
+            type="text"
+            id="editArtist"
+            placeholder="Artist Name"
+            required
+          />
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
