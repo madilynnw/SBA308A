@@ -1,54 +1,24 @@
-// display.js
+// Function to render songs in the song list container
 export function renderSongs(songs) {
-  const gallery = document.getElementById("gallery");
-  gallery.innerHTML = ""; // Clear the current gallery
+  const songListContainer = document.getElementById("songList");
+  songListContainer.innerHTML = ""; // Clear any existing songs
 
   songs.forEach((song) => {
     const songElement = document.createElement("div");
-    songElement.classList.add("gallery-item");
+    songElement.classList.add("song-item");
+
+    const songTitle = song.trackName || "No Title";
+    const artistName = song.artistName || "Unknown Artist";
+    const albumName = song.collectionName || "Unknown Album";
+    const artworkUrl = song.artworkUrl100 || ""; // Album artwork
+
     songElement.innerHTML = `
-        <div class="song-title">${song.title}</div>
-        <div class="song-artist">${song.artist}</div>
+        <img src="${artworkUrl}" alt="${songTitle}" style="width: 100px; height: 100px; border-radius: 8px;">
+        <div class="song-title">${songTitle}</div>
+        <div class="song-artist">${artistName}</div>
+        <div class="song-album">${albumName}</div>
       `;
-    songElement.addEventListener("click", () => openEditModal(song));
-    gallery.appendChild(songElement);
+
+    songListContainer.appendChild(songElement);
   });
-}
-
-export function openEditModal(song) {
-  const editModal = document.getElementById("editModal");
-  const editTitle = document.getElementById("editTitle");
-  const editArtist = document.getElementById("editArtist");
-  const editForm = document.getElementById("editForm");
-
-  editTitle.value = song.title;
-  editArtist.value = song.artist;
-
-  editForm.onsubmit = (event) => handleEditSubmit(event, song);
-  editModal.style.display = "block";
-}
-
-export function closeEditModal() {
-  const editModal = document.getElementById("editModal");
-  editModal.style.display = "none";
-}
-
-async function handleEditSubmit(event, song) {
-  event.preventDefault();
-
-  const updatedTitle = document.getElementById("editTitle").value;
-  const updatedArtist = document.getElementById("editArtist").value;
-
-  const updatedSong = {
-    title: updatedTitle,
-    artist: updatedArtist,
-  };
-
-  try {
-    const updatedData = await updateSong(song.id, updatedSong);
-    renderSongs(updatedData);
-    closeEditModal();
-  } catch (error) {
-    console.error("Error during song edit:", error);
-  }
 }

@@ -1,35 +1,31 @@
-// app.js
-import { fetchSongs, updateSong } from "./api.js";
-import { renderSongs, closeEditModal } from "./display.js";
+import { fetchSongs } from "./api.js";
+import { renderSongs } from "./display.js";
 
-let songs = []; // Store songs in memory
+document.addEventListener("DOMContentLoaded", () => {
+  // Fetch and display top 100 R&B songs
+  fetchSongs();
 
-async function initializeApp() {
-  try {
-    songs = await fetchSongs(); // Fetch the initial list of songs
-    renderSongs(songs); // Render songs to the gallery
-  } catch (error) {
-    alert("Failed to load songs");
-  }
-}
+  // Search functionality
+  const searchButton = document.getElementById("searchButton");
+  const searchBar = document.getElementById("searchBar");
 
-function searchSongs(query) {
-  const filteredSongs = songs.filter(
-    (song) =>
-      song.title.toLowerCase().includes(query.toLowerCase()) ||
-      song.artist.toLowerCase().includes(query.toLowerCase())
-  );
-  renderSongs(filteredSongs);
-}
-
-// Search functionality
-document.getElementById("search").addEventListener("input", (event) => {
-  const query = event.target.value;
-  searchSongs(query);
+  searchButton.addEventListener("click", () => {
+    const searchTerm = searchBar.value.toLowerCase();
+    filterSongs(searchTerm);
+  });
 });
 
-// Initialize the app when the page loads
-window.onload = initializeApp;
+// Filter songs by search term
+function filterSongs(searchTerm) {
+  const songItems = document.querySelectorAll(".song-item");
+  songItems.forEach((item) => {
+    const title = item.querySelector(".song-title").textContent.toLowerCase();
+    const artist = item.querySelector(".song-artist").textContent.toLowerCase();
 
-// Close the edit modal when clicking the close button
-document.getElementById("closeModal").addEventListener("click", closeEditModal);
+    if (title.includes(searchTerm) || artist.includes(searchTerm)) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}

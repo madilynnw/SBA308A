@@ -3,35 +3,199 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Top 20 R&B Songs of 2024</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Top 50 Songs of 2024</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("https://haikei.app/_next/static/images/layered-steps-1-4bcffd0402178079984d7766b2225be4.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        flex-direction: column;
+        overflow: auto; /* Ensures the entire page is scrollable */
+      }
+
+      #header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #header h1 {
+        font-size: 36px;
+        color: #fff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+      }
+
+      #searchContainer {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        width: 100%;
+      }
+
+      #searchBar {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 2px solid #ddd;
+        margin-right: 10px;
+        width: 300px;
+      }
+
+      #searchButton {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #searchButton:hover {
+        background-color: #45a049;
+      }
+
+      .song-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        width: 80%;
+        max-width: 1000px;
+        margin-top: 20px;
+        overflow-y: auto;
+        height: 60vh;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .song-item {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Semi-transparent white background */
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .song-title {
+        font-weight: bold;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+
+      .song-artist {
+        font-size: 14px;
+        color: #555;
+        margin-top: 5px;
+      }
+    </style>
   </head>
   <body>
-    <header>
-      <h1>Top 20 R&B Songs of 2024</h1>
-      <input type="text" id="search" placeholder="Search for songs..." />
-    </header>
-
-    <div class="gallery" id="gallery"></div>
-
-    <!-- Modal for editing song -->
-    <div id="editModal" class="modal">
-      <div class="modal-content">
-        <span id="closeModal" class="close">&times;</span>
-        <h2>Edit Song</h2>
-        <form id="editForm">
-          <input type="text" id="editTitle" placeholder="Song Title" required />
-          <input
-            type="text"
-            id="editArtist"
-            placeholder="Artist Name"
-            required
-          />
-          <button type="submit">Save Changes</button>
-        </form>
-      </div>
+    <!-- Header with Title -->
+    <div id="header">
+      <h1>Top 100 R&B Songs of 2024</h1>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Search Bar and Button -->
+    <div id="searchContainer">
+      <input
+        type="text"
+        id="searchBar"
+        placeholder="Search for songs or artists..."
+      />
+      <button id="searchButton">Search</button>
+    </div>
+
+    <!-- R&B Songs List Container -->
+    <div class="song-list" id="songListRNB"></div>
+
+    <script>
+      // Static top 20 R&B songs list of 2024
+      const topSongs = [
+        { title: "WHY", artist: "By Sasha Keable" },
+        { title: "POOKIE'S REQUIEM", artist: "By ESAILORR" },
+        { title: "Always Time", artist: "By Miguel" },
+        { title: "Inside Out", artist: "By BINA., 9DAYS" },
+        {
+          title: "Don't Walk Away",
+          artist: "By ECordae, Jordan Ward, and Ravyn Lenae",
+        },
+        { title: "Stay Down", artist: "By ESAYGRACE" },
+        { title: "Take It Slow", artist: "By EVedo" },
+        { title: "Soft", artist: "By FLO, Chlöe, and Halle" },
+        { title: "Waiting On You", artist: "By Camper, Tone Stith" },
+        { title: "B.P.E.", artist: "By anaiis, Grupo Cosmo" },
+        { title: "Hello Miss Johnson", artist: "By EJack Harlow" },
+        { title: "Like U", artist: "By Summer Banton" },
+        { title: "In Your Absence", artist: "By Tay Iwar" },
+        { title: "Supernova", artist: "By ETamera" },
+        { title: "je t'aime", artist: "By Dayo Bello" },
+        { title: "alone", artist: "By Tiana Major9" },
+        { title: "Lying", artist: "By ERIMON, Dylan Sinclair" },
+        { title: "Pick Up The Pace", artist: "By Mahalia, Bayka" },
+        { title: "SAME WAYZ", artist: "By Azekel" },
+      ];
+
+      // Render the song list dynamically
+      function renderSongs(songs) {
+        const songListContainer = document.getElementById("songListRNB");
+        songListContainer.innerHTML = ""; // Clear previous songs
+
+        // Show a message if no songs are found
+        if (songs.length === 0) {
+          songListContainer.innerHTML = "<p>No songs found.</p>";
+          return;
+        }
+
+        songs.forEach((song) => {
+          const songElement = document.createElement("div");
+          songElement.classList.add("song-item");
+
+          songElement.innerHTML = `
+                    <div class="song-title">${song.title}</div>
+                    <div class="song-artist">${song.artist}</div>
+                `;
+
+          songListContainer.appendChild(songElement);
+        });
+      }
+
+      // Handle the search functionality
+      function handleSearch() {
+        const searchTerm = document
+          .getElementById("searchBar")
+          .value.toLowerCase();
+
+        // Filter the top songs list based on the search term
+        const filteredSongs = topSongs.filter((song) => {
+          const title = song.title.toLowerCase();
+          const artist = song.artist.toLowerCase();
+          return title.includes(searchTerm) || artist.includes(searchTerm);
+        });
+
+        // Render the filtered songs
+        renderSongs(filteredSongs);
+      }
+
+      // Attach the search event listener to the search button
+      document
+        .getElementById("searchButton")
+        .addEventListener("click", handleSearch);
+
+      // Initially render all top 20 songs
+      renderSongs(topSongs);
+    </script>
   </body>
 </html>

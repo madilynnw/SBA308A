@@ -1,38 +1,20 @@
-// api.js
-export const API_URL = "https://api.example.com/rnb-songs";
-
-// Function to fetch all songs
+// Function to fetch Top 100 R&B songs from iTunes API
 export async function fetchSongs() {
+  const searchTerm = "R&B"; // Genre is set to R&B
+  const url = `https://itunes.apple.com/search?term=${searchTerm}&limit=100&media=music&entity=song`;
+
   try {
-    const response = await fetch(API_URL);
-    if (!response.ok) {
-      throw new Error("Failed to fetch songs");
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.results && data.results.length > 0) {
+      renderSongs(data.results); // Pass data to the renderSongs function
+    } else {
+      document.getElementById("songList").innerHTML = "<p>No songs found.</p>";
     }
-    return await response.json(); // Return the list of songs
   } catch (error) {
-    console.error("Error fetching songs:", error);
-    throw error; // Rethrow error for handling in the main app
-  }
-}
-
-// Function to update a song
-export async function updateSong(songId, updatedSong) {
-  try {
-    const response = await fetch(`${API_URL}/${songId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedSong),
-    });
-
-    if (!response.ok) {
-      throw new Error("Error updating song");
-    }
-
-    return await response.json(); // Return the updated song
-  } catch (error) {
-    console.error("Error updating song:", error);
-    throw error; // Rethrow error for handling in the main app
+    console.error("Error fetching data:", error);
+    document.getElementById("songList").innerHTML =
+      "<p>Error fetching song list.</p>";
   }
 }

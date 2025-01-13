@@ -1,179 +1,103 @@
-/* Basic reset */
-* {
+/* Global styles */
+body {
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-/* Body styles */
-body {
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  background: linear-gradient(to right, #ff5e62, #ff9966); /* Neon gradient */
-  color: #fff;
-  padding: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url("https://haikei.app/_next/static/images/layered-steps-1-4bcffd0402178079984d7766b2225be4.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
-/* Header styles */
-header {
+/* Header */
+#header {
   text-align: center;
-  margin-bottom: 30px;
-}
-
-h1 {
-  font-size: 3rem;
-  font-family: "Impact", sans-serif;
-  color: #ffff00;
-  text-shadow: 2px 2px #ff33cc, 3px 3px #ff6600; /* Neon glow effect */
-}
-
-input[type="text"] {
-  padding: 15px;
-  width: 350px;
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-  border: 3px solid #ff6600;
-  border-radius: 10px;
-  background-color: #fff;
-  color: #000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-input[type="text"]:focus {
-  border-color: #ff33cc;
-  outline: none;
-  box-shadow: 0 0 10px rgba(255, 102, 204, 0.8);
-}
-
-/* Gallery container - Invisible 5x4 grid */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 columns */
-  grid-template-rows: repeat(4, 1fr); /* 4 rows */
-  gap: 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Individual song item styles */
-.gallery-item {
-  background-color: #ff6600;
-  padding: 25px;
-  border: 2px solid #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-.gallery-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
-}
-
-.song-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ffff00;
-  text-shadow: 1px 1px 5px #ff33cc;
-  margin-bottom: 10px;
-}
-
-.song-artist {
-  font-size: 1.2rem;
-  color: #ffcc00;
-  text-shadow: 1px 1px 5px #ff6600;
   margin-bottom: 20px;
 }
 
-button {
-  padding: 12px 20px;
-  background-color: #ff33cc;
+#header h1 {
+  font-size: 36px;
   color: #fff;
-  border: 2px solid #ff33cc;
-  border-radius: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-button:hover {
-  background-color: #ff5e62;
-  transform: scale(1.1);
-}
-
-button:active {
-  transform: scale(1);
-}
-
-/* Modal styles */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Dark background */
-}
-
-.modal-content {
-  background-color: #ffcc00;
-  margin: 15% auto;
-  padding: 30px;
-  border-radius: 12px;
-  width: 80%;
-  max-width: 500px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
-}
-
-.close {
-  color: #ff6600;
-  float: right;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: #ff33cc;
-  text-decoration: none;
-}
-
-form {
+/* Search Bar */
+#searchContainer {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 100%;
 }
 
-input[type="text"] {
+#searchBar {
   padding: 10px;
-  font-size: 1.2rem;
-  border: 2px solid #ff33cc;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #000;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid #ddd;
+  margin-right: 10px;
+  width: 300px;
 }
 
-button[type="submit"] {
-  background-color: #ff33cc;
-  color: #fff;
-  font-size: 1.2rem;
-  padding: 15px;
-  border-radius: 8px;
+#searchButton {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-button[type="submit"]:hover {
-  background-color: #ff5e62;
+#searchButton:hover {
+  background-color: #45a049;
+}
+
+/* Song List */
+.song-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 80%;
+  max-width: 1000px;
+  margin-top: 20px;
+  overflow-y: auto;
+  height: 60vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.song-item {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Semi-transparent white background */
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.song-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.song-artist {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+}
+
+.song-album {
+  font-size: 12px;
+  color: #777;
+  margin-top: 5px;
 }
