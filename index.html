@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <input type="text" id="search" placeholder="Search for songs..." />
-    <button id="addSongButton">Add New Song</button>
+    <header>
+      <h1>Top 20 R&B Songs of 2024</h1>
+      <input type="text" id="search" placeholder="Search for songs..." />
+    </header>
+
     <div class="gallery" id="gallery"></div>
-    <div class="pagination" id="pagination"></div>
 
     <!-- Modal for editing song -->
     <div id="editModal" class="modal">
@@ -30,7 +32,6 @@
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-// Hardcoded top 20 R&B songs of 2024 data
+// Top 20 R&B songs data
 let topRnbSongs = [
   { id: 1, title: "Faded Love", artist: "Alicia Keys" },
   { id: 2, title: "Lovers' Lane", artist: "Tory Lanez" },
@@ -22,52 +22,60 @@ let topRnbSongs = [
   { id: 20, title: "Falling for You", artist: "Jasmine Sullivan" },
 ];
 
-let currentPage = 1;
-let totalPages = 4; // Since we have 20 songs and we're displaying 5 per page
-let searchQuery = "";
-
 // DOM elements
 const gallery = document.getElementById("gallery");
-const pagination = document.getElementById("pagination");
 const searchInput = document.getElementById("search");
-const addSongButton = document.getElementById("addSongButton");
 const editModal = document.getElementById("editModal");
 const closeModal = document.getElementById("closeModal");
 const editForm = document.getElementById("editForm");
 const editTitle = document.getElementById("editTitle");
 const editArtist = document.getElementById("editArtist");
 
-// Fetch the songs based on query and pagination
-function fetchSongs(query = "", page = 1) {
-  // Filter by search query
-  const filteredSongs = topRnbSongs.filter((song) =>
-    song.title.toLowerCase().includes(query.toLowerCase())
-  );
-
-  // Paginate the filtered songs
-  const paginatedSongs = filteredSongs.slice((page - 1) * 5, page * 5);
-
-  totalPages = Math.ceil(filteredSongs.length / 5); // Update total pages based on the filtered data
-  displaySongs(paginatedSongs);
-  setupPagination();
-}
-
-// Display songs in the gallery
-function displaySongs(songs) {
+// Fetch and display songs
+function displaySongs() {
   gallery.innerHTML = ""; // Clear current gallery
-  songs.forEach((song) => {
+  topRnbSongs.forEach((song) => {
     const songElement = document.createElement("div");
     songElement.classList.add("gallery-item");
     songElement.innerHTML = `
         <div class="song-title">${song.title}</div>
         <div class="song-artist">${song.artist}</div>
-        <button onclick="openEditModal(${song.id})">Edit Song</button>
       `;
+    songElement.addEventListener("click", () => openEditModal(song.id));
     gallery.appendChild(songElement);
   });
 }
 
-// Setup pagination controls
-function setupPagination() {
-  pagination.innerHTML = ""; // Clear current pagination
+// Open the edit modal and populate the fields with the song's details
+function openEditModal(songId) {
+  const song = topRnbSongs.find((s) => s.id === songId);
+  editTitle.value = song.title;
+  editArtist.value = song.artist;
+  editForm.onsubmit = (event) => handleEditSubmit(event, songId);
+  editModal.style.display = "block";
 }
+
+// Handle form submission to edit the song
+function handleEditSubmit(event, songId) {
+  event.preventDefault();
+
+  const updatedTitle = editTitle.value;
+  const updatedArtist = editArtist.value;
+
+  // Find the song and update its details
+  const song = topRnbSongs.find((s) => s.id === songId);
+  song.title = updatedTitle;
+  song.artist = updatedArtist;
+
+  // Close the modal and re-render the song list
+  editModal.style.display = "none";
+  displaySongs();
+}
+
+// Close the modal
+closeModal.onclick = () => {
+  editModal.style.display = "none";
+};
+
+// Initially display songs
+displaySongs();
